@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indego Bike Rental Weather Dashboard</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            color: #222;
+        }
+
+        .page-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px 50px;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            color: #1f3c88;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #1f3c88;
+        }
+
+        h3 {
+            margin-top: 0;
+            color: #2f4f9f;
+        }
+
+        p {
+            line-height: 1.5;
+        }
+
+        .section {
+            background: #ffffff;
+            padding: 22px;
+            margin-bottom: 24px;
+            border-radius: 14px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .top-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        .metrics-box,
+        .prediction-box,
+        .range-box,
+        .note-box {
+            background-color: #f7f9fc;
+            padding: 14px 16px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .prediction-box {
+            background-color: #eef6ff;
+            border-left: 4px solid #1f3c88;
+        }
+
+        .note-box {
+            background-color: #fff5e8;
+            border-left: 4px solid #d9822b;
+        }
+
+        .nav-link {
+            display: inline-block;
+            margin-bottom: 25px;
+            color: #1f3c88;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .range-box {
+            background-color: #f3f3f3;
+        }
+
+        ul {
+            margin-top: 8px;
+            padding-left: 18px;
+        }
+
+        form {
+            display: grid;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 15px;
+            border: 1px solid #cfd6df;
+            border-radius: 8px;
+        }
+
+        button {
+            width: fit-content;
+            padding: 10px 18px;
+            font-size: 15px;
+            background-color: #1f3c88;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #17306c;
+        }
+
+        .plot-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 20px;
+        }
+
+        .plot-card {
+            background-color: #fbfcfe;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px;
+            min-height: 420px;
+        }
+
+        .plot-card.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .plot-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2f4f9f;
+            margin-bottom: 10px;
+        }
+
+        .plot-box {
+            width: 100%;
+            height: 360px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 14px;
+            background: white;
+        }
+
+        th, td {
+            border: 1px solid #d9e0e8;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #edf2f7;
+        }
+
+        @media (max-width: 1000px) {
+            .top-grid,
+            .plot-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .plot-card.full-width {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <h1>Indego Bike Rental Weather Dashboard</h1>
+        <p>
+            This dashboard explores the relationship between weather conditions and daily bike rentals,
+            and provides a simple predictive model based on temperature, humidity, and wind speed.
+        </p>
+
+        <a class="nav-link" href="/passholder-analysis">Go to Passholder Dashboard →</a>
+
+        <div class="section">
+            <h2>Correlation Table</h2>
+            <p>
+                This table shows the correlation between weather conditions and the number of bikes rented per day.
+            </p>
+            {{ corr_table|safe }}
+        </div>
+
+        <div class="top-grid">
+            <div class="section">
+                <h2>Model Summary</h2>
+
+                {% if metrics %}
+                <div class="metrics-box">
+                    <p><strong>R²:</strong> {{ metrics.r2 }}</p>
+                    <p><strong>Mean Absolute Error:</strong> {{ metrics.mae }}</p>
+                    <p><strong>Intercept:</strong> {{ metrics.intercept }}</p>
+                    <p><strong>Coefficients:</strong></p>
+                    <ul>
+                        {% for feature, coef in metrics.coefficients.items() %}
+                            <li><strong>{{ feature }}</strong>: {{ coef }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <h3>P-Values</h3>
+                <ul>
+                    {% for variable, pval in metrics.p_values.items() %}
+                        <li>
+                            <strong>{{ variable }}</strong>: {{ pval }}
+                        </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                    <p>No model metrics available.</p>
+                {% endif %}
+            </div>
+
+            <div class="section">
+                <h2>Predict Bikes Rented</h2>
+                <p>
+                    Enter the day’s weather conditions to estimate how many bikes may be rented.
+                </p>
+
+                {% if input_ranges %}
+                <div class="range-box">
+                    <p><strong>Observed training ranges:</strong></p>
+                    <p>Temperature: {{ input_ranges.temp_f_min }} to {{ input_ranges.temp_f_max }} °F</p>
+                    <p>Humidity: {{ input_ranges.humidity_min }} to {{ input_ranges.humidity_max }} %</p>
+                    <p>Wind speed: {{ input_ranges.wind_speed_min }} to {{ input_ranges.wind_speed_max }} m/s</p>
+                </div>
+                {% endif %}
+
+                {% if error_message %}
+                <div class="note-box">
+                    <p><strong>Note:</strong> {{ error_message }}</p>
+                </div>
+                {% endif %}
+
+                <form method="POST">
+                    <label for="temp_f">Temperature (°F)</label>
+                    <input type="number" step="any" name="temp_f" id="temp_f" value="{{ form_values.temp_f }}" required>
+
+                    <label for="humidity">Humidity (%)</label>
+                    <input type="number" step="any" name="humidity" id="humidity" value="{{ form_values.humidity }}" required>
+
+                    <label for="wind_speed">Wind Speed (m/s)</label>
+                    <input type="number" step="any" name="wind_speed" id="wind_speed" value="{{ form_values.wind_speed }}" required>
+
+                    <button type="submit">Predict Rentals</button>
+                </form>
+
+                {% if prediction is not none %}
+                <div class="prediction-box">
+                    <h3>Prediction Result</h3>
+                    <p><strong>Estimated bikes rented:</strong> {{ prediction }}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

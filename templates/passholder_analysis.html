@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Indego Trip Analysis Dashboard</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            color: #222;
+        }
+
+        .page-wrapper {
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        h1 {
+            color: #1f3c88;
+            margin-bottom: 10px;
+        }
+
+        p {
+            line-height: 1.5;
+        }
+
+        .nav-link {
+            display: inline-block;
+            margin-bottom: 25px;
+            color: #1f3c88;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 14px;
+            padding: 18px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            min-height: 500px;
+        }
+
+        .chart-box {
+            width: 100%;
+            height: 460px;
+        }
+
+        .table-scroll-container {
+            max-height: 420px;
+            overflow-y: auto;
+            overflow-x: auto;
+            border: 1px solid #d9e0e8;
+            border-radius: 10px;
+            margin-top: 12px;
+        }
+
+        .table-scroll-container table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-scroll-container th,
+        .table-scroll-container td {
+            padding: 10px;
+            border: 1px solid #d9e0e8;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .table-scroll-container th {
+            background-color: #edf2f7;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+
+        @media (max-width: 1000px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <h1>Indego Trip Analysis Dashboard</h1>
+        <p>
+            This dashboard explores trip duration, passholder type, bike type,
+            start stations, and end stations for the Q2 Indego dataset.
+        </p>
+
+        <a class="nav-link" href="/">← Back to Prediction Dashboard</a>
+
+        <div class="dashboard-grid">
+            <div class="chart-card">
+                <h2>Trip Duration by Passholder Type</h2>
+                <p>
+                    This table shows the total number of bike rentals for each trip duration
+                    (in minutes) across each passholder type.
+                </p>
+
+                <div class="table-scroll-container">
+                    {{ duration_table | safe }}
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <h2>Bike Type Rentals by Passholder Type</h2>
+                <p>
+                    This table shows the total number of bike rentals for each passholder type.
+                </p>
+
+                <div class="table-scroll-container">
+                    {{ bike_by_passholder_table | safe }}
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <h2>Top 10 Start Stations</h2>
+                <p>
+                    This table shows the top 10 start stations used across all passholders and breaks down popularity for each passholder type.
+                </p>
+
+                <div class="table-scroll-container">
+                    {{ start_station_df_table | safe }}
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <h2>Top 10 End Stations by Passholder Type</h2>
+                <p>
+                    This table shows the top 10 end stations used across all passholders and breaks down popularity for each passholder type.
+                </p>
+
+                <div class="table-scroll-container">
+                    {{ end_station_df_table | safe }}
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</body>
+</html>
