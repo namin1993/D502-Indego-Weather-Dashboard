@@ -147,19 +147,13 @@ The most popular End Station out of the top 10 End Stations according to each pa
 **templates:** Directory for html templates for the Flask application.
 
 ### Project Links
-**Github Repository:**
+**Github Repository:** [D502-Indego-Weather-Dashboard](https://github.com/namin1993/D502-Indego-Weather-Dashboard)
 
 **Webpage:**
 
 
 
 
-
-* Can we predict hourly/daily bike demand based on weather (temperature, precipitation, & wind) conditions?
-Linear regression analysis
-
-
-* What are differences between casual riders and subscribers? Are casual riders more sensitive to weather than subscribers?
 
 start_lat & start_lon - 3 missing rows where start_station is 3000
 end_lat & end_lon - missing 6139 where end_station is 3000
