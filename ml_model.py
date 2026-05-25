@@ -16,7 +16,8 @@ def load_indego_weather_data():
     db = db_connections.mogodb_client["Final_Project"]
     collection = db["indego_weather"]
 
-    records = list(collection.find({}, {"_id": 0}))
+    # records = list(collection.find({}, {"_id": 0})) # Retrieve all records from MongoDB. Use this line only when running app locally.
+    records = list(collection.find({}, {"_id": 0}).limit(5000)) # Retrieve only 5000 records from MongoDB so as not to exceed memory limit in Heroku's 512 MB Dyno 
     df = pd.DataFrame(records)
 
     return df
