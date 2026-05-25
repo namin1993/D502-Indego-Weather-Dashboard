@@ -1,18 +1,16 @@
-Flask @ file:///home/ktietz/src/ci/flask_1611932660458/work
+Flask==1.1.2
 Flask-PyMongo==2.3.0
-json5 @ file:///tmp/build/80754af9/json5_1624432770122/work
-jsonschema @ file:///Users/ktietz/demo/mc3/conda-bld/jsonschema_1630511932244/work
+json5==0.9.6
+jsonschema==3.2.0
 matplotlib==3.9.4
-matplotlib-inline @ file:///tmp/build/80754af9/matplotlib-inline_1628242447089/work
+matplotlib-inline==0.1.2
 numpy==1.26.4
-numpydoc @ file:///tmp/build/80754af9/numpydoc_1605117425582/work
+numpydoc==1.1.0
 pandas==2.3.2
 plotly==6.7.0
 pymongo==4.1.1
-python-dateutil @ file:///tmp/build/80754af9/python-dateutil_1626374649649/work
-requests @ file:///tmp/build/80754af9/requests_1629994808627/work
+python-dateutil==2.8.2
+requests==2.26.0
 scikit-learn==1.6.1
 scipy==1.13.1
 statsmodels==0.14.5
-Unidecode @ file:///tmp/build/80754af9/unidecode_1614712377438/work
-urllib3==1.26.7
