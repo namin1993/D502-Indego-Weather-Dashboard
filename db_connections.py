@@ -1,11 +1,14 @@
 # MongoDB Database Connection
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
-import config
+# import config #Use for config.py file
+import os
 
 # Use MongoClient to set up mongodb connection
-username = config.username
-password = config.password
+#username = config.username
+#password = config.password
+username = os.environ['username']
+password = os.environ['password']
 cluster = 'ml-analytics-cluster.qkmsm.mongodb.net'
 
 cloudstr_uri = f'mongodb+srv://{username}:{password}@{cluster}/?retryWrites=true&w=majority'
