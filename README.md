@@ -147,40 +147,6 @@ The most popular End Station out of the top 10 End Stations according to each pa
 **templates:** Directory for html templates for the Flask application.
 
 ### Project Links
-**Github Repository:** [D502-Indego-Weather-Dashboard](https://github.com/namin1993/D502-Indego-Weather-Dashboard)
+**Github Repository:** [github.com/namini1993/D502-Indego-Weather-Dashboard](https://github.com/namin1993/D502-Indego-Weather-Dashboard)
 
-**Webpage:**
-
-
-
-
-
-start_lat & start_lon - 3 missing rows where start_station is 3000
-end_lat & end_lon - missing 6139 where end_station is 3000
-
-365760 rows
-
-https://www.linkedin.com/pulse/exploratory-analysis-philadelphias-indego-bike-share-armstrong/
-
-Jupyter Notebook:
-> Extract Data
-*Connect to Openweather API
-*Convert Indego bike data to dataframe
-
-> Transform Data
-*Fill in blank values where station is 3000
-
-* Seperate start time and end time columns as seperate start_date, start_time, end_date, end_time columns
-
-* Use start_Longitude, start_Latitude, and start_date to call WeatherAPI data and make weather dataframe
-
-* Combine weather data columns to Indego dataframe
-23100 - 45 minutes
-
-
-
-Can you create:
-1.) Plotly bar graph measuring the total duration of each trip to the total number of each passholder_type
-2.) Plotly bar graph comparing number of each passholder_type to the amount of bike_type rented for the entire months of the Q2 dataset
-3.) Plotly graph measuring the total number of each passholder_type to each start_station
-4.) Plotly graph measuring the total number of each passholder_type to each end_station
+**Webpage:**[safe-lake-52260-475e8a92fad5.herokuapp.com/](https://safe-lake-52260-475e8a92fad5.herokuapp.com/)
