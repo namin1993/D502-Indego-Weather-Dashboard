@@ -5,16 +5,14 @@ from pymongo.server_api import ServerApi
 import os
 
 # Use MongoClient to set up mongodb connection
-#username = config.username
-#password = config.password
+# username = config.username
+# password = config.password
 username = os.environ['username']
 password = os.environ['password']
 cluster = 'ml-analytics-cluster.qkmsm.mongodb.net'
 
 cloudstr_uri = f'mongodb+srv://{username}:{password}@{cluster}/?retryWrites=true&w=majority'
 mogodb_client = MongoClient(cloudstr_uri, server_api=ServerApi('1'))
-#db = mogodb_client['Final_Project']
-#terrorism = db["terrorism"]
 
 # Send a ping to confirm a successful connection
 try:
