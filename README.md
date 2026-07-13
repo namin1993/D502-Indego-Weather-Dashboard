@@ -128,7 +128,7 @@ The most popular End Station out of the top 10 End Stations according to each pa
 * Daypass: 3000
 * Indego30: 3000
 * Indego365: 3020
-* IndegoFlex: N/A
+* IndegoFlex: N/A (In the .csv file, it is 3203)
 * Walk-Up: 3000
 
 ### File and Directory Descriptions
